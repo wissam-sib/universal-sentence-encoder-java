@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.wissam</groupId>
+  <artifactId>muse-svm</artifactId>
+  <version>0.0.1-SNAPSHOT</version>  
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+</properties>
+<repositories>
+    <repository>
+        <id>tensorflow-snapshots</id>
+        <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </repository>
+</repositories>
+<dependencies>
+    <!-- Example of dependency, see section above for more options -->
+    <dependency>
+  <groupId>org.tensorflow</groupId>
+  <artifactId>tensorflow-core-platform</artifactId>
+  <version>0.2.0</version>
+</dependency>
+</dependencies>
+</project>
