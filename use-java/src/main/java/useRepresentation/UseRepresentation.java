@@ -1,24 +1,20 @@
+/**
+ * 
+ * @author Wissam Siblini (https://github.com/wissam-sib/)
+ * 
+ * Adapted from https://github.com/tensorflow/hub/issues/194 to work with tensorflow 2.3.1 in java
+ * 
+ * You can download the "universal-sentence-encoder-4-java" model from https://drive.google.com/file/d/1X6j8keyG0Hhc6CbOlc25gHwrYE_s9_NF/view?usp=sharing 
+ * 
+ */
+
 package useRepresentation;
 import org.tensorflow.SavedModelBundle;
 import org.tensorflow.Tensor;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
 import java.util.Arrays;
-
-import javax.xml.crypto.Data;
-
 import java.io.UnsupportedEncodingException;
-import org.tensorflow.ConcreteFunction;
-import org.tensorflow.Signature;
-import org.tensorflow.TensorFlow;
-import org.tensorflow.ndarray.FloatNdArray;
-import org.tensorflow.ndarray.NdArraySequence;
 import org.tensorflow.ndarray.NdArrays;
-import org.tensorflow.op.Ops;
-import org.tensorflow.op.core.Constant;
-import org.tensorflow.op.core.Placeholder;
-import org.tensorflow.op.math.Add;
-import org.tensorflow.types.TInt32;
 import org.tensorflow.types.TString;
 import org.tensorflow.types.TFloat32;
 
@@ -40,23 +36,21 @@ public class UseRepresentation {
 
 	public float[][] embed(String[] values) throws UnsupportedEncodingException {
 
+		// conversion to bytes Tensor
 		byte[][] input = new byte[values.length][];
 		for (int i = 0; i < values.length; i++) {
 			String val = values[i];
 			input[i] = val.getBytes(StandardCharsets.UTF_8);
 
-		}	
-		
+		}			
 		Tensor<TString> t = TString.tensorOfBytes(NdArrays.vectorOfObjects(input));
-
+		
+		// conversion with Use
 		Tensor<TFloat32> result = this.savedModelBundle.session().runner().feed("input", t).fetch("output").run().get(0).expect(TFloat32.DTYPE);
-
+		
 		float[][] output = new float[values.length][512];
-		
-		TFloat32 output_raw = result.data();
-
-		long[] idx = new long[2];
-		
+		// conversion to regular float array
+		long[] idx = new long[2];		
 		for(int i = 0;i<output.length;i++) {
 			for(int j = 0;j<output[0].length;j++) {
 				idx[0] = i;
@@ -73,7 +67,7 @@ public class UseRepresentation {
 	public static void main(String[] args) {
 
 		
-		UseRepresentation model = new UseRepresentation("C:\\use_java\\universal-sentence-encoder-4-java");
+		UseRepresentation model = new UseRepresentation("path/to/universal-sentence-encoder-4-java");
 		String[] myStringArray = new String[] { "Hello World", "I am going to be converted to an embedding", "For various NLP tasks" };
 		
 		try {
