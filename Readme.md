@@ -1,4 +1,4 @@
-#Using Universal Sentence Encoder in Java
+# Using Universal Sentence Encoder in Java
 
 Universal Sentence Encoder (USE) is transformer-based model that turns natural language sentences into fixed size float vectors. 
 
@@ -7,11 +7,11 @@ These vectors can then be used so solve several NLP tasks such as classification
 
 Tested on Windows 7 and Ubuntu 20.x.
 
-## Step 1 : Preparing the model
+## Step 1 : Prepare the model
 
 Note : You can skip this part and directly download the model [here](https://drive.google.com/file/d/1X6j8keyG0Hhc6CbOlc25gHwrYE_s9_NF/view?usp=sharing) (just unzip the folder ``universal-sentence-encoder-4-java`` at your favorite location)
 
-To prepare the model, I used the tensorflow hub in python to load it and then saved it with a simple save that specified the inputs and outputs:
+To prepare the model, I used the tensorflow hub in python to download into a ``KerasLayer``. Then I simply saved it while specifying the inputs and outputs:
 
 ```python
 import tensorflow.compat.v1 as tf
@@ -33,7 +33,7 @@ with tf.Graph().as_default():
             legacy_init_op=tf.initializers.tables_initializer(name='init_all_tables'))
 ```
 
-With tensorflow_hub 0.9.0 and tensorflow 2.3.1 
+I used tensorflow_hub 0.9.0 and tensorflow 2.3.1 
 
 ## Step 2 : Import the project in Java and run it
 
@@ -41,7 +41,7 @@ The project uses Maven for dependencies. In the pom.xml, you'll find the Java ve
 
 In UseRepresentation.java, you can edit the main method (specify the path to "universal-sentence-encoder-4-java/") and then run it to test the model :
 
-```
+```java
 UseRepresentation model = new UseRepresentation("path/to/universal-sentence-encoder-4-java");
 String[] myStringArray = new String[] { "Hello World", "I am going to be converted to an embedding", "For various NLP tasks" };
 
